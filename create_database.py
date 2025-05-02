@@ -1,6 +1,6 @@
+
 from sqlalchemy import create_engine, text
-from sqlalchemy_utils import database_exists, create_database
-import os
+from sqlalchemy_utils import create_database, database_exists
 
 # 數據庫連接配置
 DB_USER = "postgres"
@@ -15,7 +15,7 @@ DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NA
 try:
     # 創建引擎連接到 postgres 數據庫
     engine = create_engine(DATABASE_URL)
-    
+
     if not database_exists(engine.url):
         create_database(engine.url)
         print(f"數據庫 '{DB_NAME}' 創建成功！")
@@ -31,4 +31,4 @@ try:
 
 except Exception as e:
     print("操作過程中出錯：")
-    print(e) 
+    print(e)

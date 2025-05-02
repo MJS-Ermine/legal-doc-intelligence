@@ -1,16 +1,16 @@
 """FastAPI application for the Legal Document Intelligence Platform."""
 
 from datetime import datetime
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, Optional
 
-from fastapi import Depends, FastAPI, HTTPException, UploadFile, File
+from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from ..database.db_manager import db_manager
-from ..database.models import Document, DocumentType
+from ..database.models import DocumentType
 from ..evaluation.evaluator import LegalEvaluator
 from ..processors.text_processor import LegalTextProcessor
 from ..processors.vectorization_processor import VectorizationProcessor

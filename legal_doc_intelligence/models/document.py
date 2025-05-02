@@ -23,7 +23,7 @@ class LegalDocument(Base):
 
     raw_content = Column(Text, nullable=False, comment='原始文件內容')
     processed_content = Column(JSON, comment='結構化處理結果')
-    metadata = Column(JSON, comment='額外元數據')
+    doc_metadata = Column(JSON, comment='額外元數據')
 
     created_at = Column(DateTime, default=datetime.utcnow, comment='創建時間')
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment='更新時間')

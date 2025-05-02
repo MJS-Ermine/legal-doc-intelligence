@@ -37,4 +37,4 @@ LOGGING = {
 SECURITY = {
     "secret_key": os.getenv("SECRET_KEY", "your-secret-key-here"),
     "allowed_origins": eval(os.getenv("ALLOWED_ORIGINS", '["http://localhost:3000"]')),
-} 
+}

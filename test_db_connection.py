@@ -13,7 +13,7 @@ DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NA
 try:
     # 創建引擎
     engine = create_engine(DATABASE_URL)
-    
+
     # 測試連接
     with engine.connect() as connection:
         result = connection.execute(text("SELECT version();"))
@@ -23,4 +23,4 @@ try:
 
 except Exception as e:
     print("連接數據庫時出錯：")
-    print(e) 
+    print(e)

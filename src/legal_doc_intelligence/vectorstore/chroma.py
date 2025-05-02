@@ -137,7 +137,7 @@ class ChromaVectorStore(BaseVectorStore):
     def add_documents(self, docs: List[Dict[str, Any]]) -> None:
         texts = [doc["content"] for doc in docs]
         embeddings = self.embedding_model.encode(texts)
-        for doc, emb in zip(docs, embeddings):
+        for doc, emb in zip(docs, embeddings, strict=False):
             self.collection.add(
                 documents=[doc["content"]],
                 metadatas=[doc.get("metadata", {})],

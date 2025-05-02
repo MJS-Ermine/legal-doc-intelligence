@@ -72,7 +72,7 @@ class SearchResult(BaseModel):
     """Response model for search results."""
 
     document: str
-    metadata: dict
+    doc_metadata: dict
     score: float
     context: Optional[str] = None
 
@@ -82,6 +82,16 @@ class PipelineResponse(BaseModel):
     request_id: str
     status: str
     stats: Optional[Dict[str, Any]] = None
+
+class RAGRequest(BaseModel):
+    query: str
+    k: int = 4
+    min_score: float = 0.3
+    mode: str = "default"
+
+class RAGResponse(BaseModel):
+    response: str
+    sources: list
 
 @router.post("/documents", response_model=str)
 async def process_document(
@@ -251,7 +261,7 @@ async def search_documents(
                 formatted_results.append(
                     SearchResult(
                         document=result["document"],
-                        metadata=result["metadata"],
+                        doc_metadata=result["metadata"],
                         score=score,
                         context=context
                     )
@@ -293,7 +303,7 @@ async def rag_query(request: RAGRequest) -> RAGResponse:
         sources = [
             {
                 "content": doc.page_content,
-                "metadata": doc.metadata,
+                "doc_metadata": doc.metadata,
                 "score": doc.metadata.get("score", 0)
             }
             for doc in documents
