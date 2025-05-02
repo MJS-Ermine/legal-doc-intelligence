@@ -1,0 +1,19 @@
+{
+  "documents": {
+    "judgment": {
+      "content": "測試判決書內容",
+      "metadata": {
+        "case_number": "TEST-2024-001"
+      }
+    },
+    "contract": {
+      "content": "測試契約內容",
+      "metadata": {
+        "parties": [
+          "甲方",
+          "乙方"
+        ]
+      }
+    }
+  }
+}

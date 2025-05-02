@@ -1,0 +1,82 @@
+---
+description: Legal AI Builder
+globs: 
+alwaysApply: false
+---
+ Project Rules: Legalsign AI Internship Preparation (Legal Data Pipeline / RAG)
+Version: Final Integrated
+
+## Project Objective & Domain
+
+- **Primary Goal**: Build a Legal Data Pipeline OR RAG system for Legalsign AI internship preparation.
+- **Domain Focus**: Prioritize Legal Tech, NLP for legal text, web scraping (e.g., Taiwan Judicial Yuan).
+- **Internship Relevance**: All code, design, documentation must reflect internship requirements.
+
+## Legal Data Sensitivity & Privacy
+
+- **PII Handling**: Mandatory identification and masking/anonymization of PII. Follow data minimization.
+- **De-identification**: Use robust methods (e.g., regex for TW ID). Consider `Faker` for testing. Maintain audit trails if reversible.
+- **Source Tracking**: Mandatory recording of data source and acquisition method.
+- **Compliance Logging**: Maintain logs of key processing steps.
+
+## Technology Stack
+
+- **Python Version**: Python 3.10+ (As per Global Rules)
+- **Dependency Management**: Poetry / Rye (As per Global Rules)
+- **Core Data Libs**: `pandas`, `numpy` (Mandatory)
+- **Chinese NLP**: `jieba` (Mandatory, use UTF-8)
+- **Advanced NLP (Optional)**: `spaCy`, `NLTK` (e.g., for PII NER)
+- **PDF Extraction (If Needed)**: `PyPDF2`, `pdfplumber`
+- **Term Standardization (Optional)**: `pycorrector` (with custom legal dictionary)
+- **Web Scraping**:
+    - Default: `requests` + `BeautifulSoup4`
+    - Structured/Scale: `Scrapy`
+    - JS Required (Use Sparingly): `Selenium`, `Playwright` (Justify necessity)
+    - Politeness: Mandatory delays, rate limits, respect `robots.txt`.
+- **RDBMS**: PostgreSQL (Primary), SQLAlchemy (ORM)
+- **Vector/RAG**:
+    - Embeddings: `sentence-transformers`
+    - Vector DB: `Chroma` (Default), `FAISS` (Optional)
+    - Orchestration: `LangChain`, `LlamaIndex`
+- **Data Validation**: `pydantic`
+- **Containerization**: `Docker`, `docker-compose` (Set `ALLOW_RESET: "false"` in prod)
+- **Version Control**: `git` (As per Global Rules)
+
+## Design & Structure
+
+- **Directory Structure**: Follow standard layout (`src/`, `config/`, `tests/`, `data/`, etc. - see detailed rules).
+- **Modularity**: Single Responsibility Principle. Reusable components.
+- **ETL**: Modular, testable steps.
+- **Parsing Strategy**: Consider Strategy pattern for diverse document types.
+- **Incremental Processing**: Implement where feasible (timestamps, versioning).
+
+## Code Quality & Documentation
+
+- **Formatting**: Strict PEP 8 via `Ruff` (As per Global Rules)
+- **Type Hinting**: Mandatory (`typing`) for all functions, methods, members (As per Global Rules)
+- **Docstrings**: Mandatory Google-style for public APIs. Detail purpose, args, returns, raises.
+- **Comments**:
+    - English default. Use for complex logic.
+    - **Exception**: **繁體中文** comments allowed ONLY for complex Taiwan-specific legal logic. Mark clearly: `# 特許繁體中文註釋：...`
+- **Testing**: `pytest` (Mandatory). Aim for >= 90% coverage on critical modules. Include Unit, Integration, Compliance tests.
+- **Error Handling**: Robust, specific exceptions. Custom exceptions if helpful.
+- **Logging**: Use standard `logging` module (As per Global Rules).
+- **README.md**: Mandatory. Include overview, setup, execution, data flow, structure.
+- **Design Docs**: Document key architectural decisions, complex logic.
+
+## Security
+
+- **Secrets Management**: Use environment variables / `.env` (gitignored). No hardcoding.
+- **PII Security**: Re-emphasize secure handling and anonymization/masking.
+- **Input Validation**: Sanitize and validate external inputs (URLs, API data).
+
+## AI Assistance (Cursor Usage)
+
+- **Prompting**: Use specific, contextual prompts (@file, @doc). Provide examples.
+- **Code Review**: Thoroughly review all AI-generated code (correctness, style, security, performance). Treat as starting point.
+
+## Demonstration Strategy
+
+- **Implementation**: Progressive (core features first).
+- **Portfolio**: Highlight relevant skills in commits/docs.
+- **Demos**: Prepare concise demos for interviews.
