@@ -14,11 +14,7 @@ from .base import BaseVectorStore
 logger = logging.getLogger(__name__)
 
 class ChromaVectorStore(BaseVectorStore):
-    """Chroma-based vector store implementation.
-    
-    This class implements the vector store interface using Chroma as the backend.
-    It uses SentenceTransformers for generating embeddings.
-    """
+    """ChromaDB 向量資料庫實作，整合 sentence-transformers。"""
 
     def __init__(
         self,
@@ -137,3 +133,19 @@ class ChromaVectorStore(BaseVectorStore):
         # Chroma handles loading automatically when initializing the client
         if self.persist_directory:
             logger.info("Vector store loaded from disk")
+
+    def add_documents(self, docs: List[Dict[str, Any]]) -> None:
+        texts = [doc["content"] for doc in docs]
+        embeddings = self.embedding_model.encode(texts)
+        for doc, emb in zip(docs, embeddings):
+            self.collection.add(
+                documents=[doc["content"]],
+                metadatas=[doc.get("metadata", {})],
+                embeddings=[emb.tolist()],
+                ids=[str(doc["id"])]
+            )
+
+    def query(self, query: str, top_k: int = 5) -> List[Dict[str, Any]]:
+        query_emb = self.embedding_model.encode([query])[0].tolist()
+        results = self.collection.query(query_embeddings=[query_emb], n_results=top_k)
+        return results.get("documents", [])

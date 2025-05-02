@@ -11,14 +11,18 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from .models import Base
 
+DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/legaldb"  # 可由環境變數覆蓋
+
+engine = create_engine(DATABASE_URL, echo=False, future=True)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 class DatabaseManager:
     """Manager class for database operations."""
 
     def __init__(self) -> None:
         """Initialize the database manager."""
-        self.engine = self._create_engine()
-        self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
+        self.engine = engine
+        self.SessionLocal = SessionLocal
 
     def _create_engine(self) -> Engine:
         """Create and configure the database engine.

@@ -1,35 +1,34 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  web:
+  app:
     build: .
+    container_name: legal-doc-intelligence-app
     ports:
       - "8000:8000"
-    environment:
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=${POSTGRES_DB:-legal_doc_db}
-      - POSTGRES_USER=${POSTGRES_USER:-postgres}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}
-    volumes:
-      - ./data:/app/data
-      - ./logs:/app/logs
     depends_on:
       - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/legaldb
+    volumes:
+      - .:/app
+    restart: unless-stopped
 
   db:
-    image: postgres:13-alpine
+    image: postgres:15
+    container_name: legal-doc-intelligence-db
     environment:
-      - POSTGRES_DB=${POSTGRES_DB:-legal_doc_db}
-      - POSTGRES_USER=${POSTGRES_USER:-postgres}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: legaldb
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
 
 volumes:
-  postgres_data:
+  pgdata:
 
 networks:
   legal-net:

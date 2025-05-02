@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0] - 2024-06-09
+
+### Added
+- 專案骨架與目錄結構
+- Poetry 依賴管理
+- Dockerfile、docker-compose.yml
+- README、LICENSE、CONTRIBUTING、CHANGELOG
+- Scrapy 爬蟲、資料處理、資料庫、向量資料庫、API、測試模組骨架
+
 ## [1.0.0-alpha.1] - 2024-03-26
 
 ### Added

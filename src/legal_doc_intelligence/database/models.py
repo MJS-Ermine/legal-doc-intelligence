@@ -2,6 +2,7 @@
 
 import enum
 from datetime import datetime
+from typing import Optional
 
 from sqlalchemy import Column, DateTime, Enum, ForeignKey, Integer, String, Text
 from sqlalchemy.ext.declarative import declarative_base
@@ -18,23 +19,21 @@ class DocumentType(enum.Enum):
 
 
 class Document(Base):
-    """Model representing a legal document."""
-
+    """法律文件主表。"""
     __tablename__ = "documents"
-
-    id = Column(Integer, primary_key=True)
+    id: int = Column(Integer, primary_key=True, autoincrement=True)
     doc_type = Column(Enum(DocumentType), nullable=False)
-    title = Column(String(500), nullable=False)
-    content = Column(Text, nullable=False)
-    source_url = Column(String(2000), nullable=False)
+    title: str = Column(String(256), nullable=False)
+    content: str = Column(Text, nullable=False)
+    source_url: str = Column(String(512), nullable=False)
     source_id = Column(String(100), nullable=True)  # Original ID from source
     court_name = Column(String(100), nullable=True)
     decision_date = Column(DateTime, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    created_at: datetime = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationships
-    doc_metadata = relationship("DocumentMetadata", back_populates="document", uselist=False)
+    doc_metadata = relationship("DocumentMetadata", back_populates="document")
     processing_records = relationship("ProcessingRecord", back_populates="document")
 
     def __repr__(self) -> str:
@@ -43,18 +42,18 @@ class Document(Base):
 
 
 class DocumentMetadata(Base):
-    """Model for storing additional metadata about a document."""
-
+    """文件元資料表。"""
     __tablename__ = "document_metadata"
-
-    id = Column(Integer, primary_key=True)
-    document_id = Column(Integer, ForeignKey("documents.id"), nullable=False)
+    id: int = Column(Integer, primary_key=True, autoincrement=True)
+    document_id: int = Column(Integer, ForeignKey("documents.id"), nullable=False)
     case_number = Column(String(100), nullable=True)
     judge_names = Column(String(500), nullable=True)
     keywords = Column(String(1000), nullable=True)
     category = Column(String(100), nullable=True)
     subcategory = Column(String(100), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    key: str = Column(String(64), nullable=False)
+    value: str = Column(String(256), nullable=False)
+    created_at: datetime = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationships
@@ -66,16 +65,15 @@ class DocumentMetadata(Base):
 
 
 class ProcessingRecord(Base):
-    """Model for tracking document processing history."""
-
+    """文檔處理紀錄表。"""
     __tablename__ = "processing_records"
-
-    id = Column(Integer, primary_key=True)
-    document_id = Column(Integer, ForeignKey("documents.id"), nullable=False)
+    id: int = Column(Integer, primary_key=True, autoincrement=True)
+    document_id: int = Column(Integer, ForeignKey("documents.id"), nullable=False)
     processing_type = Column(String(50), nullable=False)  # e.g., "scraping", "cleaning", "analysis"
-    status = Column(String(20), nullable=False)  # "success", "failed", "in_progress"
+    status: str = Column(String(32), nullable=False)
     error_message = Column(Text, nullable=True)
-    processed_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    processed_at: datetime = Column(DateTime, default=datetime.utcnow)
+    message: Optional[str] = Column(String(512))
 
     # Relationships
     document = relationship("Document", back_populates="processing_records")

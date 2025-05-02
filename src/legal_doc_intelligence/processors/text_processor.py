@@ -249,3 +249,53 @@ class LegalTextProcessor:
         except Exception as e:
             logger.error(f"Error extracting entities: {str(e)}")
             raise
+
+class TextProcessor:
+    """文本處理器，負責清理、分詞、個資遮蔽等。"""
+
+    @staticmethod
+    def clean_html(text: str) -> str:
+        """去除 HTML 標籤與多餘空白。
+
+        Args:
+            text (str): 原始文本
+        Returns:
+            str: 清理後文本
+        """
+        text = re.sub(r"<[^>]+>", "", text)
+        text = re.sub(r"\s+", " ", text)
+        return text.strip()
+
+    @staticmethod
+    def remove_special_chars(text: str) -> str:
+        """去除特殊字元。
+
+        Args:
+            text (str): 原始文本
+        Returns:
+            str: 處理後文本
+        """
+        return re.sub(r"[^\w\u4e00-\u9fff ]", "", text)
+
+    @staticmethod
+    def mask_personal_info(text: str) -> str:
+        """遮蔽個資（如身分證、電話、email）。
+
+        Args:
+            text (str): 原始文本
+        Returns:
+            str: 遮蔽後文本
+        """
+        # TODO: 補充遮蔽規則
+        return text
+
+    @staticmethod
+    def tokenize(text: str) -> List[str]:
+        """簡易分詞。
+
+        Args:
+            text (str): 文本
+        Returns:
+            List[str]: 分詞結果
+        """
+        return text.split()

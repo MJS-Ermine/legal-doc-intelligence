@@ -83,3 +83,15 @@ def test_chroma_vector_store_metadata(temp_dir: Path) -> None:
     assert len(results) > 0
     assert all(result["metadata"]["case_type"] == "民事" for result in results)
     assert all(result["metadata"]["year"] == 2023 for result in results)
+
+def test_add_and_query_documents(tmp_path):
+    store = ChromaVectorStore(persist_directory=str(tmp_path))
+    docs = [
+        {"id": 1, "content": "台灣高等法院判決書", "metadata": {"court": "高等法院"}},
+        {"id": 2, "content": "最高法院裁定", "metadata": {"court": "最高法院"}},
+    ]
+    store.add_documents(docs)
+    results = store.query("高等法院", top_k=1)
+    assert len(results) == 1
+    assert "高等法院" in results[0]
+    store.persist()

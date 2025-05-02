@@ -119,3 +119,18 @@ def test_document_processor_persistence(temp_dir: Path, sample_metadata: Documen
     results = processor2.search_similar("持久化儲存")
     assert len(results) > 0
     assert any("持久化" in result["document"] for result in results)
+
+def test_process_document():
+    processor = DocumentProcessor()
+    doc = {"id": 1, "title": "測試判決書", "content": "<p>這是測試內容。</p>", "metadata": {"court": "高等法院"}}
+    result = processor.process_document(doc)
+    assert result["id"] == 1
+    assert "測試內容" in result["content"]
+    assert isinstance(result["tokens"], list)
+
+
+def test_split_document():
+    processor = DocumentProcessor()
+    text = "A" * 1200
+    chunks = processor.split_document(text, max_length=512)
+    assert len(chunks) == 3

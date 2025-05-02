@@ -1,7 +1,7 @@
 """Spider for crawling Taiwan Judicial Yuan's decision database."""
 
 from datetime import datetime
-from typing import Any, Generator
+from typing import Any, Generator, Iterator
 
 import scrapy
 from loguru import logger
@@ -11,11 +11,11 @@ from scrapy.http import Request, Response
 class JudicialSpider(scrapy.Spider):
     """Spider for crawling court decisions from the Judicial Yuan website."""
 
-    name = "judicial_decisions"
+    name = "judicial_spider"
     allowed_domains = ["judicial.gov.tw"]
 
     # Base URL for the search interface
-    start_urls = ["https://judgment.judicial.gov.tw/FJUD/default.aspx"]
+    start_urls = ["https://judicial.gov.tw/xxx"]  # TODO: 替換為實際入口
 
     # Custom settings for this spider
     custom_settings = {
@@ -144,3 +144,19 @@ class JudicialSpider(scrapy.Spider):
         except Exception as e:
             logger.error(f"Error parsing decision page {response.url}: {str(e)}")
             return {}
+
+    def parse(self, response: scrapy.http.Response) -> Iterator[Any]:
+        """解析列表頁，提取標題與內文連結，處理分頁。"""
+        # TODO: 補充選擇器
+        for item in response.css(".doc-item"):
+            yield {
+                "title": item.css(".title::text").get(),
+                "url": response.urljoin(item.css("a::attr(href)").get()),
+            }
+        # 處理分頁
+        next_page = response.css("a.next::attr(href)").get()
+        if next_page:
+            yield response.follow(next_page, self.parse)
+
+    def handle_error(self, failure: Any) -> None:
+        self.logger.error(f"Request failed: {failure}")

@@ -14,6 +14,7 @@ from pydantic import BaseModel
 from ..vectorstore.base import BaseVectorStore
 from ..vectorstore.chroma import ChromaVectorStore
 from .pii_processor import PIIMaskingConfig, PIIMatch, PIIProcessor
+from .text_processor import TextProcessor
 
 logger = logging.getLogger(__name__)
 
@@ -39,15 +40,7 @@ class DocumentMetadata(BaseModel):
     pii_status: str = "unprocessed"  # unprocessed, masked, or encrypted
 
 class DocumentProcessor:
-    """Processor for legal documents.
-    
-    This class handles:
-    1. Text splitting and cleaning
-    2. Metadata extraction
-    3. PII detection and masking
-    4. Version control
-    5. Vector storage integration
-    """
+    """文檔處理器，負責切分、清理、metadata、向量存儲整合。"""
 
     def __init__(
         self,
@@ -72,6 +65,7 @@ class DocumentProcessor:
         self.chunk_size = chunk_size
         self.chunk_overlap = chunk_overlap
         self.pii_processor = PIIProcessor(masking_config=pii_config)
+        self.text_processor = TextProcessor()
 
         # Version control storage
         self.version_dir = persist_directory / "versions" if persist_directory else None
@@ -302,3 +296,44 @@ class DocumentProcessor:
     def persist(self) -> None:
         """Persist the vector store if supported."""
         self.vector_store.persist()
+
+    def process_document(self, doc: Dict[str, Any]) -> Dict[str, Any]:
+        """處理單一文檔，清理文本、提取 metadata。
+
+        Args:
+            doc (Dict[str, Any]): 原始文檔資料
+        Returns:
+            Dict[str, Any]: 處理後文檔
+        """
+        text = doc.get("content", "")
+        text = self.text_processor.clean_html(text)
+        text = self.text_processor.remove_special_chars(text)
+        text = self.text_processor.mask_personal_info(text)
+        tokens = self.text_processor.tokenize(text)
+        return {
+            "id": doc.get("id"),
+            "title": doc.get("title"),
+            "content": text,
+            "tokens": tokens,
+            "metadata": doc.get("metadata", {}),
+        }
+
+    def split_document(self, text: str, max_length: int = 512) -> List[str]:
+        """將長文本切分為多段。
+
+        Args:
+            text (str): 文本
+            max_length (int): 每段最大長度
+        Returns:
+            List[str]: 切分後段落
+        """
+        return [text[i:i+max_length] for i in range(0, len(text), max_length)]
+
+    def save_to_vectorstore(self, docs: List[Dict[str, Any]]) -> None:
+        """將文檔存入向量資料庫（預留接口）。
+
+        Args:
+            docs (List[Dict[str, Any]]): 文檔清單
+        """
+        # TODO: 整合 ChromaDB
+        pass

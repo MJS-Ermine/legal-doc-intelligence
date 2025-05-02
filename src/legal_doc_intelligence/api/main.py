@@ -1,9 +1,9 @@
 """FastAPI application for the Legal Document Intelligence Platform."""
 
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 from pydantic import BaseModel, Field
@@ -140,54 +140,23 @@ async def analyze_document(
         logger.error(f"Error analyzing document: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/api/v1/documents", response_model=Dict[str, Any])
-async def upload_document(
-    request: DocumentUploadRequest,
-    db: Session = Depends(get_db)
-) -> Dict[str, Any]:
-    """Upload and process a new document.
-    
-    Args:
-        request: Document upload request.
-        db: Database session.
-        
-    Returns:
-        Processing results and document ID.
-    """
-    try:
-        # 清理文本
-        cleaned_text = text_processor.clean_text(request.content)
+@app.post("/api/v1/documents")
+def upload_document(file: UploadFile = File(...)) -> Dict[str, Any]:
+    """上傳並處理法律文件。"""
+    # TODO: 文件解析與處理
+    return {"filename": file.filename, "status": "uploaded"}
 
-        # 創建文檔記錄
-        document = Document(
-            doc_type=request.doc_type,
-            title=request.title,
-            content=cleaned_text,
-            source_url=request.source_url,
-            created_at=datetime.utcnow()
-        )
+@app.post("/api/v1/question")
+def ask_question(question: str) -> Dict[str, Any]:
+    """提交法律問題，回傳 RAG 答案。"""
+    # TODO: 整合向量檢索與 LLM
+    return {"question": question, "answer": "(mock answer)"}
 
-        db.add(document)
-        db.commit()
-        db.refresh(document)
-
-        # 處理文檔
-        vectorization_processor.process_document(document, db)
-
-        # 提取元數據和實體
-        metadata = text_processor.extract_metadata(cleaned_text)
-        entities = text_processor.extract_entities(cleaned_text)
-
-        return {
-            "document_id": document.id,
-            "metadata": metadata,
-            "entities": entities,
-            "status": "success"
-        }
-
-    except Exception as e:
-        logger.error(f"Error uploading document: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+@app.post("/api/v1/analyze")
+def analyze_document(doc_id: int) -> Dict[str, Any]:
+    """分析指定文檔。"""
+    # TODO: 文檔分析邏輯
+    return {"doc_id": doc_id, "analysis": "(mock analysis)"}
 
 @app.get("/api/v1/health")
 async def health_check() -> Dict[str, str]:

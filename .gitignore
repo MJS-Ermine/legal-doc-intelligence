@@ -1,84 +1,36 @@
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
 *.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
 *.egg
-
-# Virtual Environment
-venv/
-env/
-ENV/
+*.egg-info/
+dist/
+build/
 
 # IDE
-.idea/
 .vscode/
+.idea/
 *.swp
-*.swo
+*.sublime-workspace
+*.sublime-project
 
-# Logs
+# OS
+.DS_Store
+Thumbs.db
+
+# Data & Logs
+data/raw/
+data/processed/
+logs/
 *.log
 
-# Local development
-.env
-.env.local
-.env.*.local
-
-# Database
-*.sqlite
-*.db
-
-# Test coverage
-.coverage
-htmlcov/
-.tox/
-.nox/
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Alembic
-alembic/*.cfg
-alembic/versions/*.py[co]
-alembic/versions/__pycache__
-
-# Environment variables
+# Virtual env
+venv/
 .env
 .env.*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Docker
+*.pid

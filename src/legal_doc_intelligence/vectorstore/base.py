@@ -8,11 +8,7 @@ from typing import Any, Dict, List, Optional
 logger = logging.getLogger(__name__)
 
 class BaseVectorStore(ABC):
-    """Abstract base class for vector store implementations.
-    
-    This class defines the interface that all vector store implementations must follow.
-    It provides methods for adding, searching, and managing document embeddings.
-    """
+    """向量資料庫抽象類。"""
 
     def __init__(self, persist_directory: Optional[Path] = None):
         """Initialize the vector store.
@@ -65,10 +61,20 @@ class BaseVectorStore(ABC):
 
     @abstractmethod
     def persist(self) -> None:
-        """Persist the vector store to disk if persistence is enabled."""
+        """持久化向量資料庫。"""
         pass
 
     @abstractmethod
     def load(self) -> None:
         """Load the vector store from disk if persistence is enabled."""
+        pass
+
+    @abstractmethod
+    def add_documents(self, docs: List[Dict[str, Any]]) -> None:
+        """新增文檔到向量資料庫。"""
+        pass
+
+    @abstractmethod
+    def query(self, query: str, top_k: int = 5) -> List[Dict[str, Any]]:
+        """語意查詢，回傳最相關文檔。"""
         pass
