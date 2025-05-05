@@ -21,7 +21,7 @@ class FAISSVectorStore:
         persist_directory: str = "./data/vectorstore"
     ) -> None:
         """Initialize the vector store.
-        
+
         Args:
             collection_name: Name of the collection.
             embedding_model_name: Name of the sentence-transformers model to use.
@@ -81,7 +81,7 @@ class FAISSVectorStore:
         metadatas: Optional[List[Dict[str, Any]]] = None
     ) -> None:
         """Add documents to the vector store.
-        
+
         Args:
             documents: List of document texts to add.
             ids: List of unique IDs for the documents.
@@ -118,12 +118,12 @@ class FAISSVectorStore:
         where: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Search for similar documents.
-        
+
         Args:
             query: Query text to search for.
             n_results: Number of results to return.
             where: Optional filter conditions (not implemented for FAISS).
-            
+
         Returns:
             Dict containing search results with documents, distances, and metadata.
         """
@@ -155,7 +155,7 @@ class FAISSVectorStore:
 
     def delete_documents(self, ids: List[str]) -> None:
         """Delete documents from the vector store.
-        
+
         Args:
             ids: List of document IDs to delete.
         """
@@ -181,7 +181,10 @@ class FAISSVectorStore:
             if np.any(mask):
                 new_index.add(all_vectors[mask])
                 self.documents = [doc for i, doc in enumerate(self.documents) if i not in indices_to_delete]
-                self.metadatas = [meta for i, meta in enumerate(self.metadatas) if i not in indices_to_delete]
+                self.metadatas = [
+                    meta for i, meta in enumerate(self.metadatas)
+                    if i not in indices_to_delete
+                ]
                 self.ids = [id for i, id in enumerate(self.ids) if i not in indices_to_delete]
             else:
                 self.documents = []
@@ -199,10 +202,10 @@ class FAISSVectorStore:
 
     def get_document(self, id: str) -> Optional[Dict[str, Any]]:
         """Get a specific document by ID.
-        
+
         Args:
             id: Document ID to retrieve.
-            
+
         Returns:
             Dict containing document data if found, None otherwise.
         """

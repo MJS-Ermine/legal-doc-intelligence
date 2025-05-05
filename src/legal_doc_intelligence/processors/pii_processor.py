@@ -51,7 +51,7 @@ class PIIProcessor:
         load_spacy_model: bool = True
     ):
         """Initialize the PII processor.
-        
+
         Args:
             masking_config: Configuration for PII masking.
             custom_patterns: Custom regex patterns for PII detection.
@@ -94,11 +94,11 @@ class PIIProcessor:
 
     def _mask_value(self, pii_type: PIIType, value: str) -> str:
         """Mask PII value according to configuration.
-        
+
         Args:
             pii_type: Type of PII.
             value: Original value to mask.
-            
+
         Returns:
             Masked value.
         """
@@ -129,10 +129,10 @@ class PIIProcessor:
 
     def detect_pii(self, text: str) -> List[PIIMatch]:
         """Detect PII in text.
-        
+
         Args:
             text: Input text to process.
-            
+
         Returns:
             List of PII matches.
         """
@@ -171,10 +171,10 @@ class PIIProcessor:
 
     def mask_pii(self, text: str) -> tuple[str, List[PIIMatch]]:
         """Mask PII in text.
-        
+
         Args:
             text: Input text to process.
-            
+
         Returns:
             Tuple of (masked text, list of PII matches).
         """
@@ -194,7 +194,7 @@ class PIIProcessor:
         mask_format: Optional[str] = None
     ) -> None:
         """Add custom pattern for PII detection.
-        
+
         Args:
             name: Name for the pattern.
             pattern: Regex pattern string.

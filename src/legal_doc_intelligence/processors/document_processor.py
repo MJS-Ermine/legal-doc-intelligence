@@ -51,7 +51,7 @@ class DocumentProcessor:
         pii_config: Optional[PIIMaskingConfig] = None
     ):
         """Initialize the document processor.
-        
+
         Args:
             vector_store: Vector store instance to use.
             persist_directory: Directory for vector store persistence.
@@ -88,10 +88,10 @@ class DocumentProcessor:
 
     def _clean_text(self, text: str) -> str:
         """Clean the input text.
-        
+
         Args:
             text: Input text to clean.
-            
+
         Returns:
             Cleaned text.
         """
@@ -103,10 +103,10 @@ class DocumentProcessor:
 
     def _split_text(self, text: str) -> List[str]:
         """Split text into chunks.
-        
+
         Args:
             text: Input text to split.
-            
+
         Returns:
             List of text chunks.
         """
@@ -151,10 +151,10 @@ class DocumentProcessor:
 
     def _compute_hash(self, text: str) -> str:
         """Compute document hash.
-        
+
         Args:
             text: Document text.
-            
+
         Returns:
             Document hash.
         """
@@ -167,7 +167,7 @@ class DocumentProcessor:
         text: str
     ) -> None:
         """Save document version.
-        
+
         Args:
             doc_id: Document ID.
             version: Version information.
@@ -192,12 +192,12 @@ class DocumentProcessor:
         mask_pii: bool = True
     ) -> Tuple[List[str], Optional[List[PIIMatch]]]:
         """Process a document and store it in the vector store.
-        
+
         Args:
             text: Document text to process.
             metadata: Document metadata.
             mask_pii: Whether to mask PII information.
-            
+
         Returns:
             Tuple of (chunk IDs, PII matches if any).
         """
@@ -256,13 +256,13 @@ class DocumentProcessor:
         **kwargs: Any
     ) -> List[Dict[str, Any]]:
         """Search for similar text chunks.
-        
+
         Args:
             query: Query text to search for.
             k: Number of results to return.
             filter_metadata: Optional metadata filters.
             **kwargs: Additional arguments passed to vector store.
-            
+
         Returns:
             List of similar text chunks with metadata.
         """
@@ -275,10 +275,10 @@ class DocumentProcessor:
 
     def get_document_versions(self, doc_id: str) -> List[DocumentVersion]:
         """Get all versions of a document.
-        
+
         Args:
             doc_id: Document ID.
-            
+
         Returns:
             List of document versions.
         """

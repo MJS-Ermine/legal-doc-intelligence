@@ -19,7 +19,7 @@ class LegalEvaluator:
         embedding_model: Optional[str] = "paraphrase-multilingual-mpnet-base-v2"
     ) -> None:
         """Initialize the evaluator.
-        
+
         Args:
             embedding_model: Name of the sentence transformer model for semantic similarity.
         """
@@ -36,13 +36,13 @@ class LegalEvaluator:
         retrieved_docs: List[str]
     ) -> Dict[str, Any]:
         """Evaluate a RAG system response.
-        
+
         Args:
             question: Original question.
             response: Generated response.
             ground_truth: Ground truth answer.
             retrieved_docs: List of retrieved documents.
-            
+
         Returns:
             Evaluation metrics.
         """
@@ -108,11 +108,11 @@ class LegalEvaluator:
         retrieved_docs: List[str]
     ) -> Dict[str, float]:
         """Evaluate the quality of retrieved documents.
-        
+
         Args:
             question: Original question.
             retrieved_docs: List of retrieved documents.
-            
+
         Returns:
             Retrieval quality metrics.
         """
@@ -142,11 +142,11 @@ class LegalEvaluator:
         ground_truth_entities: Dict[str, List[str]]
     ) -> Dict[str, Dict[str, float]]:
         """Evaluate named entity extraction performance.
-        
+
         Args:
             extracted_entities: Dictionary of extracted entities.
             ground_truth_entities: Dictionary of ground truth entities.
-            
+
         Returns:
             Entity extraction metrics per entity type.
         """
@@ -169,9 +169,18 @@ class LegalEvaluator:
                 false_positives = len(extracted - truth)
                 false_negatives = len(truth - extracted)
 
-                precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
-                recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
-                f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
+                precision = (
+                    true_positives / (true_positives + false_positives)
+                    if (true_positives + false_positives) > 0 else 0
+                )
+                recall = (
+                    true_positives / (true_positives + false_negatives)
+                    if (true_positives + false_negatives) > 0 else 0
+                )
+                f1 = (
+                    (precision * recall) / (precision + recall)
+                    if (precision + recall) > 0 else 0
+                )
 
                 results[entity_type] = {
                     "precision": precision,
@@ -191,11 +200,11 @@ class LegalEvaluator:
         ground_truth_segments: List[Dict[str, Any]]
     ) -> Dict[str, float]:
         """Evaluate document segmentation quality.
-        
+
         Args:
             segmented_doc: List of document segments.
             ground_truth_segments: List of ground truth segments.
-            
+
         Returns:
             Segmentation quality metrics.
         """

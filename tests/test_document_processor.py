@@ -91,7 +91,7 @@ def test_document_processor_metadata_handling(temp_dir: Path, sample_metadata: D
     text = "這是一個測試文件。" * 10
 
     # Process document
-    chunk_ids = processor.process_document(text, sample_metadata)
+    processor.process_document(text, sample_metadata)
 
     # Search and verify metadata
     results = processor.search_similar("測試文件")

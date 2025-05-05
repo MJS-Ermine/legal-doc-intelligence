@@ -78,7 +78,7 @@ class LegalProcessor:
 
     def _load_legal_terms(self) -> Dict[str, str]:
         """Load standardized legal terms dictionary.
-        
+
         Returns:
             Dictionary mapping original terms to standard forms.
         """
@@ -93,10 +93,10 @@ class LegalProcessor:
 
     def extract_citations(self, text: str) -> List[Citation]:
         """Extract legal citations from text.
-        
+
         Args:
             text: Document text.
-            
+
         Returns:
             List of extracted citations.
         """
@@ -122,10 +122,10 @@ class LegalProcessor:
 
     def standardize_terms(self, text: str) -> Tuple[str, List[LegalTerm]]:
         """Standardize legal terms in text.
-        
+
         Args:
             text: Document text.
-            
+
         Returns:
             Tuple of (standardized text, list of term replacements).
         """
@@ -146,10 +146,10 @@ class LegalProcessor:
 
     def extract_arguments(self, text: str) -> List[Argument]:
         """Extract legal arguments from text.
-        
+
         Args:
             text: Document text.
-            
+
         Returns:
             List of extracted arguments.
         """
@@ -180,10 +180,10 @@ class LegalProcessor:
 
     def build_timeline(self, text: str) -> List[Timeline]:
         """Build case timeline from text.
-        
+
         Args:
             text: Document text.
-            
+
         Returns:
             List of timeline entries.
         """
@@ -198,7 +198,7 @@ class LegalProcessor:
 
             # Extract related parties
             parties = []
-            for role, pattern in self.relationship_patterns.items():
+            for _role, pattern in self.relationship_patterns.items():
                 party_matches = re.findall(pattern, event)
                 parties.extend(party_matches)
 
@@ -213,10 +213,10 @@ class LegalProcessor:
 
     def extract_parties(self, text: str) -> Dict[str, Party]:
         """Extract case parties and their relationships.
-        
+
         Args:
             text: Document text.
-            
+
         Returns:
             Dictionary mapping party names to Party objects.
         """
@@ -261,10 +261,10 @@ class LegalProcessor:
         text: str
     ) -> Tuple[str, Dict[str, Any], List[ValidationResult]]:
         """Process legal document with all available processors.
-        
+
         Args:
             text: Document text.
-            
+
         Returns:
             Tuple of (processed text, extracted information, validation results).
         """

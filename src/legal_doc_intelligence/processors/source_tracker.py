@@ -52,7 +52,7 @@ class SourceTracker:
         auto_verify: bool = False
     ):
         """Initialize the source tracker.
-        
+
         Args:
             storage_dir: Directory for storing source records.
             auto_verify: Whether to automatically verify sources when possible.
@@ -70,7 +70,7 @@ class SourceTracker:
         metadata: SourceMetadata
     ) -> None:
         """Save source record to storage.
-        
+
         Args:
             doc_id: Document ID.
             metadata: Source metadata.
@@ -84,10 +84,10 @@ class SourceTracker:
 
     def _load_source_record(self, doc_id: str) -> Optional[SourceMetadata]:
         """Load source record from storage.
-        
+
         Args:
             doc_id: Document ID.
-            
+
         Returns:
             Source metadata if found.
         """
@@ -112,7 +112,7 @@ class SourceTracker:
         additional_info: Optional[Dict[str, Any]] = None
     ) -> SourceMetadata:
         """Record document source information.
-        
+
         Args:
             doc_id: Document ID.
             source_type: Type of source.
@@ -120,7 +120,7 @@ class SourceTracker:
             collector: Name of person/system collecting the document.
             source_url: Optional URL of source.
             additional_info: Optional additional information.
-            
+
         Returns:
             Created source metadata.
         """
@@ -154,14 +154,14 @@ class SourceTracker:
         notes: Optional[str] = None
     ) -> SourceVerificationResult:
         """Verify document source.
-        
+
         Args:
             doc_id: Document ID.
             metadata: Source metadata to verify. If None, loads from storage.
             verification_method: Method used for verification.
             verifier: Name of person/system performing verification.
             notes: Optional verification notes.
-            
+
         Returns:
             Verification result.
         """
@@ -198,10 +198,10 @@ class SourceTracker:
 
     def get_source_info(self, doc_id: str) -> Optional[SourceMetadata]:
         """Get source information for a document.
-        
+
         Args:
             doc_id: Document ID.
-            
+
         Returns:
             Source metadata if found.
         """
@@ -212,10 +212,10 @@ class SourceTracker:
         source_type: SourceType
     ) -> List[SourceMetadata]:
         """List all sources of a specific type.
-        
+
         Args:
             source_type: Type of source to list.
-            
+
         Returns:
             List of source metadata.
         """

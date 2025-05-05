@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 class BaseRAG(ABC):
     """Abstract base class for RAG implementations.
-    
+
     This class defines the interface for RAG systems that combine
     retrieval and generation for legal document processing.
     """
@@ -28,7 +28,7 @@ class BaseRAG(ABC):
         streaming: bool = True
     ):
         """Initialize the RAG system.
-        
+
         Args:
             document_processor: Document processor instance for retrieval.
             model_name: Name of the LLM model to use.
@@ -65,11 +65,11 @@ class BaseRAG(ABC):
         **kwargs: Any
     ) -> List[Document]:
         """Retrieve relevant documents for the query.
-        
+
         Args:
             query: Query text.
             **kwargs: Additional retrieval arguments.
-            
+
         Returns:
             List of relevant documents.
         """
@@ -83,12 +83,12 @@ class BaseRAG(ABC):
         **kwargs: Any
     ) -> str:
         """Generate response based on query and retrieved context.
-        
+
         Args:
             query: User query.
             context: Retrieved documents for context.
             **kwargs: Additional generation arguments.
-            
+
         Returns:
             Generated response.
         """
@@ -100,11 +100,11 @@ class BaseRAG(ABC):
         **kwargs: Any
     ) -> Tuple[str, List[Document]]:
         """Process a query through the RAG pipeline.
-        
+
         Args:
             query: User query.
             **kwargs: Additional arguments for retrieval and generation.
-            
+
         Returns:
             Tuple of (generated response, retrieved documents).
         """

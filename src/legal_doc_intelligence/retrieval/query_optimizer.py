@@ -25,7 +25,7 @@ class QueryExpansion(BaseModel):
 
 class QueryOptimizer:
     """Query optimizer for legal document retrieval.
-    
+
     Features:
     1. Query segmentation and normalization
     2. Legal term expansion
@@ -39,7 +39,7 @@ class QueryOptimizer:
         synonyms_path: Optional[Path] = None
     ):
         """Initialize the query optimizer.
-        
+
         Args:
             legal_terms_path: Path to legal terms dictionary.
             synonyms_path: Path to synonyms dictionary.
@@ -54,10 +54,10 @@ class QueryOptimizer:
 
     def _load_dict(self, path: Path) -> Dict[str, List[str]]:
         """Load dictionary from JSON file.
-        
+
         Args:
             path: Path to dictionary file.
-            
+
         Returns:
             Dictionary mapping terms to related terms.
         """
@@ -74,10 +74,10 @@ class QueryOptimizer:
 
     def _normalize_query(self, query: str) -> str:
         """Normalize query text.
-        
+
         Args:
             query: Original query text.
-            
+
         Returns:
             Normalized query text.
         """
@@ -89,10 +89,10 @@ class QueryOptimizer:
 
     def _segment_query(self, query: str) -> List[str]:
         """Segment query into terms.
-        
+
         Args:
             query: Query text.
-            
+
         Returns:
             List of query terms.
         """
@@ -100,10 +100,10 @@ class QueryOptimizer:
 
     def expand_query(self, query: str) -> QueryExpansion:
         """Expand query with synonyms and legal terms.
-        
+
         Args:
             query: Original query text.
-            
+
         Returns:
             Query expansion result.
         """
@@ -136,11 +136,11 @@ class QueryOptimizer:
         context: Optional[Dict[str, Any]] = None
     ) -> List[str]:
         """Rewrite query based on expansion and context.
-        
+
         Args:
             query: Original query text.
             context: Optional query context.
-            
+
         Returns:
             List of rewritten queries.
         """
@@ -180,7 +180,7 @@ class QueryOptimizer:
 
 class MultiStageRetriever:
     """Multi-stage retriever for legal documents.
-    
+
     Features:
     1. Query optimization
     2. Multi-stage retrieval
@@ -196,7 +196,7 @@ class MultiStageRetriever:
         final_k: int = 4
     ):
         """Initialize the multi-stage retriever.
-        
+
         Args:
             query_optimizer: Query optimizer instance.
             vector_store: Vector store instance.
@@ -219,11 +219,11 @@ class MultiStageRetriever:
         weights: Optional[List[float]] = None
     ) -> List[Dict[str, Any]]:
         """Merge multiple result lists with optional weights.
-        
+
         Args:
             results_list: List of result lists to merge.
             weights: Optional weights for each result list.
-            
+
         Returns:
             Merged and deduplicated results.
         """
@@ -259,12 +259,12 @@ class MultiStageRetriever:
         **kwargs: Any
     ) -> List[Dict[str, Any]]:
         """Perform multi-stage retrieval.
-        
+
         Args:
             query: Query text.
             context: Optional query context.
             **kwargs: Additional arguments passed to vector store.
-            
+
         Returns:
             List of retrieved documents.
         """

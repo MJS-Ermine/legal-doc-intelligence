@@ -25,7 +25,7 @@ async def list_documents(
     end_date: Optional[datetime] = None
 ):
     """獲取判決書列表
-    
+
     可以通過法院、案件類型和日期範圍進行過濾
     """
     query = db.query(LegalDocument)
@@ -39,7 +39,7 @@ async def list_documents(
     if end_date:
         query = query.filter(LegalDocument.judgment_date <= end_date)
 
-    total = query.count()
+    query.count()
     documents = query.offset(skip).limit(limit).all()
 
     return [
@@ -78,7 +78,7 @@ async def search_documents(
     limit: int = Query(20, ge=1, le=100)
 ):
     """搜索判決書
-    
+
     支持全文搜索和條件過濾
     """
     base_query = db.query(LegalDocument)
@@ -99,7 +99,7 @@ async def search_documents(
     if query.end_date:
         base_query = base_query.filter(LegalDocument.judgment_date <= query.end_date)
 
-    total = base_query.count()
+    base_query.count()
     documents = base_query.offset(skip).limit(limit).all()
 
     return [

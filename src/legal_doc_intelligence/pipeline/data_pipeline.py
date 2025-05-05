@@ -22,6 +22,7 @@ from ..processors.pii_processor import PIIMaskingConfig
 from ..processors.source_tracker import SourceTracker, SourceType
 from ..processors.system_monitor import SystemMonitor
 from ..processors.vectorization_processor import VectorizationProcessor
+from ..validation.validation_rules import ValidationLevel
 
 logger = logging.getLogger(__name__)
 
@@ -84,7 +85,7 @@ class PipelineConfig(BaseModel):
 
 class DataPipeline:
     """Pipeline for processing legal documents.
-    
+
     Features:
     1. Multi-stage document processing
     2. Parallel processing support
@@ -101,7 +102,7 @@ class DataPipeline:
         persist_dir: Optional[Path] = None
     ):
         """Initialize the data pipeline.
-        
+
         Args:
             config: Pipeline configuration.
             document_processor: Document processor instance.
@@ -142,12 +143,12 @@ class DataPipeline:
         db: Optional[Session] = None
     ) -> Optional[str]:
         """Process a single document through the pipeline.
-        
+
         Args:
             document: Document to process.
             metadata: Optional document metadata.
             db: Optional database session.
-            
+
         Returns:
             Document ID if successful.
         """
@@ -259,19 +260,19 @@ class DataPipeline:
             # Argument Extraction
             current_stage = PipelineStage.ARGUMENT_EXTRACTION
             stage_start_time = time.time()
-            arguments = self.legal_processor.extract_arguments(standardized_text)
+            self.legal_processor.extract_arguments(standardized_text)
             self._record_stage_completion(current_stage, stage_start_time)
 
             # Timeline Construction
             current_stage = PipelineStage.TIMELINE_CONSTRUCTION
             stage_start_time = time.time()
-            timeline = self.legal_processor.build_timeline(standardized_text)
+            self.legal_processor.build_timeline(standardized_text)
             self._record_stage_completion(current_stage, stage_start_time)
 
             # Party Analysis
             current_stage = PipelineStage.PARTY_ANALYSIS
             stage_start_time = time.time()
-            parties = self.legal_processor.extract_parties(standardized_text)
+            self.legal_processor.extract_parties(standardized_text)
             self._record_stage_completion(current_stage, stage_start_time)
 
             # Update metadata with extracted information
@@ -330,11 +331,11 @@ class DataPipeline:
         db: Optional[Session] = None
     ) -> List[Optional[str]]:
         """Process a batch of documents.
-        
+
         Args:
             documents: List of documents to process.
             db: Optional database session.
-            
+
         Returns:
             List of document IDs for successfully processed documents.
         """
@@ -356,7 +357,7 @@ class DataPipeline:
 
     def get_stats(self) -> Dict[str, Any]:
         """Get pipeline statistics.
-        
+
         Returns:
             Dictionary of pipeline statistics.
         """
@@ -390,7 +391,7 @@ class DataPipeline:
         success: bool = True
     ) -> None:
         """Record stage completion metrics.
-        
+
         Args:
             stage: Pipeline stage.
             start_time: Stage start time.
@@ -401,7 +402,7 @@ class DataPipeline:
 
     def get_pipeline_stats(self) -> Dict[str, Any]:
         """Get comprehensive pipeline statistics.
-        
+
         Returns:
             Dictionary of pipeline statistics.
         """

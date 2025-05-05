@@ -12,7 +12,7 @@ class BaseVectorStore(ABC):
 
     def __init__(self, persist_directory: Optional[Path] = None):
         """Initialize the vector store.
-        
+
         Args:
             persist_directory: Optional directory path for persisting the vector store.
                 If None, the store will be in-memory only.
@@ -29,12 +29,12 @@ class BaseVectorStore(ABC):
         **kwargs: Any
     ) -> List[str]:
         """Add texts and their metadata to the vector store.
-        
+
         Args:
             texts: List of text strings to add.
             metadatas: Optional list of metadata dictionaries.
             **kwargs: Additional arguments specific to the implementation.
-            
+
         Returns:
             List of IDs for the added texts.
         """
@@ -48,12 +48,12 @@ class BaseVectorStore(ABC):
         **kwargs: Any
     ) -> List[Dict[str, Any]]:
         """Search for similar texts in the vector store.
-        
+
         Args:
             query: Query text to search for.
             k: Number of results to return.
             **kwargs: Additional arguments specific to the implementation.
-            
+
         Returns:
             List of dictionaries containing similar documents and their metadata.
         """

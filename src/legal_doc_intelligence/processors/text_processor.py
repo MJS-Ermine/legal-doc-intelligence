@@ -46,17 +46,18 @@ class LegalTextProcessor:
 
     def clean_text(self, text: str) -> str:
         """Clean and normalize legal text.
-        
+
         Args:
             text: Raw legal text.
-            
+
         Returns:
             Cleaned and normalized text.
         """
         try:
             # 移除多餘的空白和換行
-            text = re.sub(r'\s+', ' ', text)
-            text = re.sub(r'\n+', '\n', text)
+            text = re.sub(
+                r"[\u3000\xa0\u200b\ufeff\r\n]+", " ", text
+            )
 
             # 統一標點符號
             text = text.replace('；', ';').replace('，', ',')
@@ -75,10 +76,10 @@ class LegalTextProcessor:
 
     def _chinese_to_number(self, chinese_num: str) -> int:
         """Convert Chinese numerals to Arabic numbers.
-        
+
         Args:
             chinese_num: Chinese numeral string.
-            
+
         Returns:
             Converted integer.
         """
@@ -105,10 +106,10 @@ class LegalTextProcessor:
 
     def extract_metadata(self, text: str) -> Dict[str, Any]:
         """Extract metadata from legal text.
-        
+
         Args:
             text: Legal document text.
-            
+
         Returns:
             Dictionary containing extracted metadata.
         """
@@ -143,10 +144,10 @@ class LegalTextProcessor:
 
     def segment_document(self, text: str) -> List[Dict[str, Any]]:
         """Segment document into logical parts.
-        
+
         Args:
             text: Legal document text.
-            
+
         Returns:
             List of document segments with their types.
         """
@@ -205,10 +206,10 @@ class LegalTextProcessor:
 
     def extract_entities(self, text: str) -> Dict[str, List[str]]:
         """Extract named entities from legal text.
-        
+
         Args:
             text: Legal text to process.
-            
+
         Returns:
             Dictionary of entity types and their values.
         """

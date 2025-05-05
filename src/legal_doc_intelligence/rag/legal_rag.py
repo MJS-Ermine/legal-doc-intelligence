@@ -23,7 +23,7 @@ class LegalRAG(BaseRAG):
         **kwargs: Any
     ):
         """Initialize the legal RAG system.
-        
+
         Args:
             document_processor: Document processor instance.
             context_manager: Optional context manager instance.
@@ -82,11 +82,11 @@ class LegalRAG(BaseRAG):
         last_n: int = 5
     ) -> str:
         """Prepare conversation history for context.
-        
+
         Args:
             conversation_id: Optional conversation ID.
             last_n: Number of last messages to include.
-            
+
         Returns:
             Formatted conversation history.
         """
@@ -111,10 +111,10 @@ class LegalRAG(BaseRAG):
 
     def _prepare_document_history(self, doc_id: str) -> str:
         """Prepare document version history.
-        
+
         Args:
             doc_id: Document ID.
-            
+
         Returns:
             Formatted document history.
         """
@@ -143,14 +143,14 @@ class LegalRAG(BaseRAG):
         **kwargs: Any
     ) -> List[Document]:
         """Retrieve relevant legal documents.
-        
+
         Args:
             query: Query text.
             k: Number of documents to retrieve.
             min_score: Minimum similarity score.
             conversation_id: Optional conversation ID for context.
             **kwargs: Additional retrieval arguments.
-            
+
         Returns:
             List of relevant documents.
         """
@@ -205,14 +205,14 @@ class LegalRAG(BaseRAG):
         **kwargs: Any
     ) -> str:
         """Generate response for legal queries.
-        
+
         Args:
             query: User query.
             context: Retrieved documents.
             mode: Generation mode ("qa" or "summary").
             conversation_id: Optional conversation ID.
             **kwargs: Additional generation arguments.
-            
+
         Returns:
             Generated response.
         """
@@ -278,12 +278,12 @@ class LegalRAG(BaseRAG):
         **kwargs: Any
     ) -> Tuple[str, List[Document]]:
         """Summarize relevant legal documents.
-        
+
         Args:
             query: Search query to find relevant documents.
             conversation_id: Optional conversation ID.
             **kwargs: Additional arguments.
-            
+
         Returns:
             Tuple of (summary, retrieved documents).
         """

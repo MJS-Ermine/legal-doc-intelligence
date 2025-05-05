@@ -9,7 +9,7 @@ from ..utils.text_cleaner import clean_text, mask_personal_info
 
 class JudicialSpider(scrapy.Spider):
     """台灣司法判決書爬蟲
-    
+
     負責爬取台灣各級法院的判決書內容，並進行初步的數據清理
     """
     name = "judicial_spider"
@@ -23,7 +23,7 @@ class JudicialSpider(scrapy.Spider):
 
     def __init__(self, start_date: str = None, end_date: str = None, *args, **kwargs):
         """初始化爬蟲參數
-        
+
         Args:
             start_date: 起始日期 (YYYY-MM-DD)
             end_date: 結束日期 (YYYY-MM-DD)
@@ -34,7 +34,7 @@ class JudicialSpider(scrapy.Spider):
 
     def start_requests(self) -> Generator[Request, None, None]:
         """生成初始請求
-        
+
         根據日期範圍生成對應的搜索請求
         """
         base_url = "https://judgment.judicial.gov.tw/FJUD/default_AD.aspx"
@@ -46,7 +46,7 @@ class JudicialSpider(scrapy.Spider):
 
     def parse_search_page(self, response: Response) -> Generator[Request, None, None]:
         """解析搜索頁面，提取判決書列表
-        
+
         Args:
             response: 搜索頁面響應
         """
@@ -69,10 +69,10 @@ class JudicialSpider(scrapy.Spider):
 
     def parse_document(self, response: Response) -> Dict[str, Any]:
         """解析單個判決書詳情頁
-        
+
         Args:
             response: 判決書詳情頁響應
-        
+
         Returns:
             解析後的判決書數據
         """

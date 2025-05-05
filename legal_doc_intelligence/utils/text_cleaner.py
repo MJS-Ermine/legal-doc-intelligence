@@ -10,10 +10,10 @@ logger = logging.getLogger(__name__)
 
 def clean_text(text: str) -> str:
     """清理文本內容
-    
+
     Args:
         text: 原始文本
-    
+
     Returns:
         清理後的文本
     """
@@ -33,10 +33,10 @@ def clean_text(text: str) -> str:
 
 def mask_personal_info(text: str) -> str:
     """對文本中的個人信息進行脫敏
-    
+
     Args:
         text: 原始文本
-    
+
     Returns:
         脫敏後的文本
     """
@@ -62,10 +62,10 @@ def mask_personal_info(text: str) -> str:
 
 def extract_citations(text: str) -> List[Dict[str, Any]]:
     """提取引用法條
-    
+
     Args:
         text: 原始文本
-    
+
     Returns:
         引用法條列表
     """
@@ -92,10 +92,10 @@ def extract_citations(text: str) -> List[Dict[str, Any]]:
 
 def segment_document(text: str) -> Dict[str, Any]:
     """將判決書分段
-    
+
     Args:
         text: 原始文本
-    
+
     Returns:
         分段後的文本結構
     """

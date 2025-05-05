@@ -34,7 +34,7 @@ class JudicialSpider(scrapy.Spider):
 
     def start_requests(self) -> Generator[Request, None, None]:
         """Generate initial requests.
-        
+
         Yields:
             Request: Initial search form request.
         """
@@ -49,10 +49,10 @@ class JudicialSpider(scrapy.Spider):
 
     def parse_search_page(self, response: Response) -> Generator[Request, None, None]:
         """Parse the search page and submit the search form.
-        
+
         Args:
             response: Response object from the search page.
-            
+
         Yields:
             Request: Search result requests.
         """
@@ -79,10 +79,10 @@ class JudicialSpider(scrapy.Spider):
 
     def parse_search_results(self, response: Response) -> Generator[Request, None, None]:
         """Parse the search results page.
-        
+
         Args:
             response: Response object from the search results.
-            
+
         Yields:
             Request: Individual decision page requests.
         """
@@ -109,10 +109,10 @@ class JudicialSpider(scrapy.Spider):
 
     def parse_decision(self, response: Response) -> dict[str, Any]:
         """Parse individual decision page.
-        
+
         Args:
             response: Response object from the decision page.
-            
+
         Returns:
             dict: Extracted decision data.
         """

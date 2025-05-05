@@ -14,7 +14,7 @@ class VectorizationProcessor:
 
     def __init__(self, vector_store: FAISSVectorStore) -> None:
         """Initialize the vectorization processor.
-        
+
         Args:
             vector_store: Instance of FAISSVectorStore for document storage.
         """
@@ -22,7 +22,7 @@ class VectorizationProcessor:
 
     def process_document(self, document: Document, db: Session) -> None:
         """Process a single document and add it to the vector store.
-        
+
         Args:
             document: Document instance to process.
             db: Database session.
@@ -79,7 +79,7 @@ class VectorizationProcessor:
 
     def process_documents(self, documents: List[Document], db: Session) -> None:
         """Process multiple documents and add them to the vector store.
-        
+
         Args:
             documents: List of Document instances to process.
             db: Database session.
@@ -98,12 +98,12 @@ class VectorizationProcessor:
         filters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Search for similar documents in the vector store.
-        
+
         Args:
             query: Query text to search for.
             n_results: Number of results to return.
             filters: Optional filters to apply to the search (not implemented for FAISS).
-            
+
         Returns:
             Dict containing search results.
         """

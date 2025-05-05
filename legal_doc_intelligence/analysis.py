@@ -12,10 +12,10 @@ class TextAnalyzer:
     def extract_common_entities(self, documents: List[Document]) -> Dict[str, List[str]]:
         """
         提取多個文件中的共同實體
-        
+
         Args:
             documents: 文件列表
-            
+
         Returns:
             Dict[str, List[str]]: 實體字典
         """
@@ -48,10 +48,10 @@ class TextAnalyzer:
     def extract_common_citations(self, documents: List[Document]) -> List[str]:
         """
         提取多個文件中的共同引用
-        
+
         Args:
             documents: 文件列表
-            
+
         Returns:
             List[str]: 引用列表
         """
@@ -69,10 +69,10 @@ class TextAnalyzer:
     def create_merged_timeline(self, documents: List[Document]) -> List[Dict[str, str]]:
         """
         創建合併的時間軸
-        
+
         Args:
             documents: 文件列表
-            
+
         Returns:
             List[Dict[str, str]]: 時間軸列表
         """
@@ -93,10 +93,10 @@ class TextAnalyzer:
     def cluster_documents(self, documents: List[Document]) -> Dict[str, List[Document]]:
         """
         對文件進行聚類
-        
+
         Args:
             documents: 文件列表
-            
+
         Returns:
             Dict[str, List[Document]]: 聚類結果
         """
@@ -119,10 +119,10 @@ class TextAnalyzer:
     def extract_key_concepts(self, documents: List[Document]) -> Dict[str, int]:
         """
         提取關鍵概念
-        
+
         Args:
             documents: 文件列表
-            
+
         Returns:
             Dict[str, int]: 概念及其出現頻率
         """

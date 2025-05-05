@@ -14,10 +14,10 @@ logger = setup_logger(__name__)
 def analyze_multiple_documents(file_paths: List[str]) -> Dict[str, Any]:
     """
     分析多個法律文件並生成綜合報告
-    
+
     Args:
         file_paths: 文件路徑列表
-    
+
     Returns:
         Dict[str, Any]: 分析報告
     """

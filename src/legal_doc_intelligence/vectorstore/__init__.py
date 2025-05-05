@@ -24,13 +24,13 @@ def create_vector_store(
     **kwargs: Dict[str, Any]
 ) -> FAISSVectorStore:
     """Create a vector store instance.
-    
+
     Args:
         collection_name: Name of the collection.
         embedding_model_name: Name of the sentence-transformers model to use.
         persist_directory: Directory to persist the vector store.
         **kwargs: Additional arguments to pass to the vector store.
-        
+
     Returns:
         An instance of FAISSVectorStore.
     """

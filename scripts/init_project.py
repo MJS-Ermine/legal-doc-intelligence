@@ -21,7 +21,7 @@ def create_directory_structure():
 def setup_environment():
     """設置開發環境"""
     try:
-        import poetry
+        pass
     except ImportError:
         print("Installing poetry...")
         os.system("pip install poetry")

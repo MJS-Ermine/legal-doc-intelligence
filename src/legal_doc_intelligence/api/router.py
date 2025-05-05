@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Query
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -96,17 +96,20 @@ class RAGResponse(BaseModel):
 @router.post("/documents", response_model=str)
 async def process_document(
     request: DocumentRequest,
-    db: Session = Depends(get_db)
+    db: Session = None
 ) -> str:
     """Process and store a document.
-    
+
     Args:
         request: Document processing request.
         db: Database session.
-        
+
     Returns:
         Document ID.
     """
+    if db is None:
+        db = next(get_db())
+
     try:
         # Create document record
         document = Document(
@@ -138,24 +141,27 @@ async def process_document(
         raise HTTPException(
             status_code=500,
             detail=f"Error processing document: {str(e)}"
-        )
+        ) from e
 
 @router.post("/documents/batch", response_model=PipelineResponse)
 async def process_documents_batch(
     request: BatchDocumentRequest,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db)
+    db: Session = None
 ) -> PipelineResponse:
     """Process multiple documents in the background.
-    
+
     Args:
         request: Batch document processing request.
         background_tasks: FastAPI background tasks.
         db: Database session.
-        
+
     Returns:
         Pipeline response with request ID.
     """
+    if db is None:
+        db = next(get_db())
+
     request_id = f"batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
     try:
@@ -196,15 +202,15 @@ async def process_documents_batch(
         raise HTTPException(
             status_code=500,
             detail=f"Error processing batch: {str(e)}"
-        )
+        ) from e
 
 @router.get("/documents/batch/{request_id}", response_model=PipelineResponse)
 def get_batch_status(request_id: str) -> PipelineResponse:
     """Get status of a batch processing request.
-    
+
     Args:
         request_id: Batch request ID.
-        
+
     Returns:
         Pipeline response with status and stats.
     """
@@ -228,17 +234,22 @@ def get_batch_status(request_id: str) -> PipelineResponse:
 @router.post("/search", response_model=List[SearchResult])
 async def search_documents(
     request: SearchRequest,
-    context_size: Optional[int] = Query(None, gt=0, le=500)
+    context_size: Optional[int] = Query(None, gt=0, le=500),
+    db: Session = None
 ) -> List[SearchResult]:
     """Search for similar documents with advanced options.
-    
+
     Args:
         request: Search request.
         context_size: Optional number of characters to include before/after match.
-        
+        db: Database session.
+
     Returns:
         List of search results.
     """
+    if db is None:
+        db = next(get_db())
+
     try:
         results = document_processor.search_similar(
             query=request.query,
@@ -273,15 +284,15 @@ async def search_documents(
         raise HTTPException(
             status_code=500,
             detail=f"Error searching documents: {str(e)}"
-        )
+        ) from e
 
 @router.post("/rag/query", response_model=RAGResponse)
 async def rag_query(request: RAGRequest) -> RAGResponse:
     """Process a RAG query.
-    
+
     Args:
         request: RAG query request.
-        
+
     Returns:
         Generated response and source documents.
     """
@@ -317,4 +328,4 @@ async def rag_query(request: RAGRequest) -> RAGResponse:
         raise HTTPException(
             status_code=500,
             detail=f"Error processing RAG query: {str(e)}"
-        )
+        ) from e

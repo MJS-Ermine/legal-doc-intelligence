@@ -33,7 +33,7 @@ class DocumentContext(BaseModel):
 
 class ContextManager:
     """Manager for handling conversation and document context.
-    
+
     Features:
     1. Conversation history management
     2. Document context tracking
@@ -48,7 +48,7 @@ class ContextManager:
         persist_dir: Optional[Path] = None
     ):
         """Initialize the context manager.
-        
+
         Args:
             max_conversation_history: Maximum number of messages to keep in history.
             persist_dir: Directory for context persistence.
@@ -73,7 +73,7 @@ class ContextManager:
 
     def _save_conversation(self, conversation_id: str) -> None:
         """Save conversation context to disk.
-        
+
         Args:
             conversation_id: ID of the conversation to save.
         """
@@ -92,7 +92,7 @@ class ContextManager:
 
     def _save_document_context(self, doc_id: str) -> None:
         """Save document context to disk.
-        
+
         Args:
             doc_id: ID of the document to save.
         """
@@ -106,10 +106,10 @@ class ContextManager:
 
     def _load_conversation(self, conversation_id: str) -> Optional[List[Dict[str, Any]]]:
         """Load conversation context from disk.
-        
+
         Args:
             conversation_id: ID of the conversation to load.
-            
+
         Returns:
             List of conversation messages if found.
         """
@@ -127,10 +127,10 @@ class ContextManager:
 
     def _load_document_context(self, doc_id: str) -> Optional[DocumentContext]:
         """Load document context from disk.
-        
+
         Args:
             doc_id: ID of the document to load.
-            
+
         Returns:
             Document context if found.
         """
@@ -151,7 +151,7 @@ class ContextManager:
         message: Dict[str, Any]
     ) -> None:
         """Add a message to conversation history.
-        
+
         Args:
             conversation_id: Conversation ID.
             message: Message to add.
@@ -178,11 +178,11 @@ class ContextManager:
         last_n: Optional[int] = None
     ) -> List[Dict[str, Any]]:
         """Get conversation history.
-        
+
         Args:
             conversation_id: Conversation ID.
             last_n: Optional number of last messages to return.
-            
+
         Returns:
             List of conversation messages.
         """
@@ -209,7 +209,7 @@ class ContextManager:
         metadata: Dict[str, Any]
     ) -> None:
         """Add or update document context.
-        
+
         Args:
             doc_id: Document ID.
             title: Document title.
@@ -227,10 +227,10 @@ class ContextManager:
 
     def get_document_context(self, doc_id: str) -> Optional[DocumentContext]:
         """Get document context.
-        
+
         Args:
             doc_id: Document ID.
-            
+
         Returns:
             Document context if found.
         """
@@ -247,7 +247,7 @@ class ContextManager:
         reference: Dict[str, Any]
     ) -> None:
         """Add a reference to document context.
-        
+
         Args:
             doc_id: Document ID.
             reference: Reference information.
@@ -260,7 +260,7 @@ class ContextManager:
 
     def clear_conversation(self, conversation_id: str) -> None:
         """Clear conversation history.
-        
+
         Args:
             conversation_id: Conversation ID to clear.
         """
@@ -274,7 +274,7 @@ class ContextManager:
 
     def clear_document_context(self, doc_id: str) -> None:
         """Clear document context.
-        
+
         Args:
             doc_id: Document ID to clear.
         """
@@ -288,7 +288,7 @@ class ContextManager:
 
     def cleanup_old_contexts(self, max_age_days: int = 30) -> None:
         """Clean up old context files.
-        
+
         Args:
             max_age_days: Maximum age of context files in days.
         """

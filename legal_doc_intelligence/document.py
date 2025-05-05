@@ -13,7 +13,7 @@ class Document:
     def __init__(self, content: str, file_path: Optional[Path] = None):
         """
         初始化文件對象
-        
+
         Args:
             content: 文件內容
             file_path: 文件路徑
@@ -26,13 +26,13 @@ class Document:
     def from_file(cls, file_path: str) -> "Document":
         """
         從文件創建文件對象
-        
+
         Args:
             file_path: 文件路徑
-            
+
         Returns:
             Document: 文件對象
-            
+
         Raises:
             DocumentError: 當文件不存在或為空時
         """
@@ -63,7 +63,7 @@ class Document:
     def get_parties(self) -> Dict[str, str]:
         """
         獲取當事人信息
-        
+
         Returns:
             Dict[str, str]: 當事人信息字典
         """
@@ -80,7 +80,7 @@ class Document:
     def get_sections(self) -> Dict[str, str]:
         """
         獲取文件段落
-        
+
         Returns:
             Dict[str, str]: 段落字典
         """
@@ -109,7 +109,7 @@ class Document:
     def get_paragraphs(self) -> List[str]:
         """
         獲取文件段落列表
-        
+
         Returns:
             List[str]: 段落列表
         """
@@ -118,7 +118,7 @@ class Document:
     def extract_keywords(self) -> List[str]:
         """
         提取關鍵詞
-        
+
         Returns:
             List[str]: 關鍵詞列表
         """
@@ -132,7 +132,7 @@ class Document:
     def get_cleaned_text(self) -> str:
         """
         獲取清理後的文本
-        
+
         Returns:
             str: 清理後的文本
         """
@@ -142,10 +142,10 @@ class Document:
     def calculate_similarity(self, other: "Document") -> float:
         """
         計算與另一個文件的相似度
-        
+
         Args:
             other: 另一個文件對象
-            
+
         Returns:
             float: 相似度分數
         """
@@ -157,10 +157,10 @@ class Document:
     def compare_with(self, other: "Document") -> Dict[str, List[str]]:
         """
         與另一個文件比較差異
-        
+
         Args:
             other: 另一個文件對象
-            
+
         Returns:
             Dict[str, List[str]]: 差異信息
         """

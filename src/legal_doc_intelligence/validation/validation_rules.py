@@ -43,13 +43,13 @@ class LegalDocumentValidator:
     def __init__(
         self,
         max_file_size_mb: float = 10.0,
-        allowed_encodings: List[str] = ["utf-8", "ascii"],
-        required_fields: List[str] = ["case_number", "court", "date"],
+        allowed_encodings: List[str] = None,
+        required_fields: List[str] = None,
         min_word_count: int = 100,
         max_word_count: int = 100000
     ):
         """Initialize the validator.
-        
+
         Args:
             max_file_size_mb: Maximum allowed file size in MB.
             allowed_encodings: List of allowed text encodings.
@@ -57,6 +57,10 @@ class LegalDocumentValidator:
             min_word_count: Minimum word count for valid documents.
             max_word_count: Maximum word count for valid documents.
         """
+        if required_fields is None:
+            required_fields = ["case_number", "court", "date"]
+        if allowed_encodings is None:
+            allowed_encodings = ["utf-8", "ascii"]
         self.max_file_size = max_file_size_mb * 1024 * 1024  # Convert to bytes
         self.allowed_encodings = allowed_encodings
         self.required_fields = required_fields
@@ -69,10 +73,10 @@ class LegalDocumentValidator:
 
     def get_document_stats(self, content: str) -> DocumentStats:
         """Get document statistics.
-        
+
         Args:
             content: Document content.
-            
+
         Returns:
             Document statistics.
         """
@@ -95,10 +99,10 @@ class LegalDocumentValidator:
 
     def validate_format(self, content: str) -> List[ValidationResult]:
         """Validate document format.
-        
+
         Args:
             content: Document content.
-            
+
         Returns:
             List of validation results.
         """
@@ -151,10 +155,10 @@ class LegalDocumentValidator:
 
     def validate_content(self, content: str) -> List[ValidationResult]:
         """Validate document content.
-        
+
         Args:
             content: Document content.
-            
+
         Returns:
             List of validation results.
         """
@@ -197,10 +201,10 @@ class LegalDocumentValidator:
         metadata: Dict[str, Any]
     ) -> List[ValidationResult]:
         """Validate document metadata.
-        
+
         Args:
             metadata: Document metadata.
-            
+
         Returns:
             List of validation results.
         """
@@ -249,11 +253,11 @@ class LegalDocumentValidator:
         metadata: Dict[str, Any]
     ) -> List[ValidationResult]:
         """Validate document content and metadata.
-        
+
         Args:
             content: Document content.
             metadata: Document metadata.
-            
+
         Returns:
             List of validation results.
         """

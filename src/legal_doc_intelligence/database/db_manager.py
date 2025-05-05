@@ -26,10 +26,10 @@ class DatabaseManager:
 
     def _create_engine(self) -> Engine:
         """Create and configure the database engine.
-        
+
         Returns:
             Engine: Configured SQLAlchemy engine instance.
-        
+
         Raises:
             SQLAlchemyError: If database connection fails.
         """
@@ -62,7 +62,7 @@ class DatabaseManager:
 
     def create_database(self) -> None:
         """Create all database tables.
-        
+
         Raises:
             SQLAlchemyError: If table creation fails.
         """
@@ -75,7 +75,7 @@ class DatabaseManager:
 
     def get_db(self) -> Generator[Session, None, None]:
         """Get database session.
-        
+
         Yields:
             Session: Database session.
         """

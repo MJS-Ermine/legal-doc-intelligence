@@ -27,7 +27,7 @@ class CacheEntry:
 
 class EnhancedChromaStore(BaseVectorStore):
     """Enhanced Chroma-based vector store implementation.
-    
+
     Features:
     1. Batch processing with automatic size adjustment
     2. Result caching with TTL
@@ -46,7 +46,7 @@ class EnhancedChromaStore(BaseVectorStore):
         max_retries: int = 3
     ):
         """Initialize the enhanced Chroma vector store.
-        
+
         Args:
             collection_name: Name of the Chroma collection.
             persist_directory: Directory for persistence.
@@ -98,10 +98,10 @@ class EnhancedChromaStore(BaseVectorStore):
 
     def _compute_cache_key(self, data: Any) -> str:
         """Compute cache key for data.
-        
+
         Args:
             data: Data to compute key for.
-            
+
         Returns:
             Cache key string.
         """
@@ -111,10 +111,10 @@ class EnhancedChromaStore(BaseVectorStore):
 
     def _get_from_cache(self, key: str) -> Optional[Any]:
         """Get data from cache if valid.
-        
+
         Args:
             key: Cache key.
-            
+
         Returns:
             Cached data if valid, None otherwise.
         """
@@ -128,7 +128,7 @@ class EnhancedChromaStore(BaseVectorStore):
 
     def _add_to_cache(self, key: str, data: Any) -> None:
         """Add data to cache with TTL.
-        
+
         Args:
             key: Cache key.
             data: Data to cache.
@@ -156,12 +156,12 @@ class EnhancedChromaStore(BaseVectorStore):
         **kwargs: Any
     ) -> List[str]:
         """Add texts in batches with retry mechanism.
-        
+
         Args:
             texts: Texts to add.
             metadatas: Optional metadata for texts.
             **kwargs: Additional arguments.
-            
+
         Returns:
             List of IDs for added texts.
         """
@@ -199,13 +199,12 @@ class EnhancedChromaStore(BaseVectorStore):
 
         return all_ids
 
-    @lru_cache(maxsize=1000)
     def _compute_query_embedding(self, query: str) -> List[float]:
         """Compute and cache query embedding.
-        
+
         Args:
             query: Query text.
-            
+
         Returns:
             Query embedding.
         """
@@ -218,12 +217,12 @@ class EnhancedChromaStore(BaseVectorStore):
         alpha: float = 0.3
     ) -> List[Dict[str, Any]]:
         """Rerank results using additional criteria.
-        
+
         Args:
             query: Original query.
             results: Initial results.
             alpha: Weight for combining scores.
-            
+
         Returns:
             Reranked results.
         """
@@ -262,12 +261,12 @@ class EnhancedChromaStore(BaseVectorStore):
         **kwargs: Any
     ) -> List[Dict[str, Any]]:
         """Enhanced similarity search with caching and reranking.
-        
+
         Args:
             query: Query text.
             k: Number of results.
             **kwargs: Additional arguments.
-            
+
         Returns:
             List of similar documents.
         """

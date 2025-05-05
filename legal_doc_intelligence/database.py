@@ -33,7 +33,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db() -> Generator[Session, None, None]:
     """獲取數據庫會話
-    
+
     使用生成器模式確保會話正確關閉
     """
     db = SessionLocal()
@@ -48,7 +48,7 @@ def get_db() -> Generator[Session, None, None]:
 
 def init_db() -> None:
     """初始化數據庫
-    
+
     創建所有定義的表
     """
     from .models.document import Base

@@ -18,7 +18,7 @@ class LegalVectorStore:
         persist_directory: str = "./data/vectorstore"
     ) -> None:
         """Initialize the vector store.
-        
+
         Args:
             collection_name: Name of the ChromaDB collection.
             embedding_model_name: Name of the sentence-transformers model to use.
@@ -51,7 +51,7 @@ class LegalVectorStore:
         metadatas: Optional[List[Dict[str, Any]]] = None
     ) -> None:
         """Add documents to the vector store.
-        
+
         Args:
             documents: List of document texts to add.
             ids: List of unique IDs for the documents.
@@ -79,12 +79,12 @@ class LegalVectorStore:
         where: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Search for similar documents.
-        
+
         Args:
             query: Query text to search for.
             n_results: Number of results to return.
             where: Optional filter conditions.
-            
+
         Returns:
             Dict containing search results with documents, distances, and metadata.
         """
@@ -108,7 +108,7 @@ class LegalVectorStore:
 
     def delete_documents(self, ids: List[str]) -> None:
         """Delete documents from the vector store.
-        
+
         Args:
             ids: List of document IDs to delete.
         """
@@ -122,10 +122,10 @@ class LegalVectorStore:
 
     def get_document(self, id: str) -> Optional[Dict[str, Any]]:
         """Get a specific document by ID.
-        
+
         Args:
             id: Document ID to retrieve.
-            
+
         Returns:
             Dict containing document data if found, None otherwise.
         """

@@ -3,7 +3,7 @@
 from datetime import datetime
 from typing import Any, Dict, Optional
 
-from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
+from fastapi import Depends, FastAPI, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 from pydantic import BaseModel, Field
@@ -45,8 +45,12 @@ class QuestionRequest(BaseModel):
     """Question request model."""
 
     question: str = Field(..., description="The legal question to answer")
-    filters: Optional[Dict[str, Any]] = Field(None, description="Optional filters for document retrieval")
-    n_documents: Optional[int] = Field(3, description="Number of documents to retrieve")
+    filters: Optional[Dict[str, Any]] = Field(
+        None, description="Optional filters for document retrieval"
+    )
+    n_documents: Optional[int] = Field(
+        3, description="Number of documents to retrieve"
+    )
 
 class DocumentRequest(BaseModel):
     """Document analysis request model."""
@@ -64,7 +68,7 @@ class DocumentUploadRequest(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(None, description="Additional metadata")
 
 # 依賴項
-def get_db():
+def get_db() -> Session:
     """Get database session."""
     db = next(db_manager.get_db())
     try:
@@ -76,14 +80,14 @@ def get_db():
 @app.post("/api/v1/question", response_model=Dict[str, Any])
 async def answer_question(
     request: QuestionRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ) -> Dict[str, Any]:
     """Answer a legal question using the RAG system.
-    
+
     Args:
         request: Question request containing the question and optional parameters.
         db: Database session.
-        
+
     Returns:
         Answer and supporting information.
     """
@@ -98,19 +102,19 @@ async def answer_question(
 
     except Exception as e:
         logger.error(f"Error processing question: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 @app.post("/api/v1/analyze", response_model=Dict[str, Any])
 async def analyze_document(
     request: DocumentRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ) -> Dict[str, Any]:
     """Analyze a legal document.
-    
+
     Args:
         request: Document analysis request.
         db: Database session.
-        
+
     Returns:
         Analysis results.
     """
@@ -138,30 +142,18 @@ async def analyze_document(
 
     except Exception as e:
         logger.error(f"Error analyzing document: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 @app.post("/api/v1/documents")
-def upload_document(file: UploadFile = File(...)) -> Dict[str, Any]:
+def upload_document(file: UploadFile) -> Dict[str, Any]:
     """上傳並處理法律文件。"""
     # TODO: 文件解析與處理
     return {"filename": file.filename, "status": "uploaded"}
 
-@app.post("/api/v1/question")
-def ask_question(question: str) -> Dict[str, Any]:
-    """提交法律問題，回傳 RAG 答案。"""
-    # TODO: 整合向量檢索與 LLM
-    return {"question": question, "answer": "(mock answer)"}
-
-@app.post("/api/v1/analyze")
-def analyze_document(doc_id: int) -> Dict[str, Any]:
-    """分析指定文檔。"""
-    # TODO: 文檔分析邏輯
-    return {"doc_id": doc_id, "analysis": "(mock analysis)"}
-
 @app.get("/api/v1/health")
 async def health_check() -> Dict[str, str]:
     """Check API health status.
-    
+
     Returns:
         Health status information.
     """

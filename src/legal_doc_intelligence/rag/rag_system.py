@@ -23,7 +23,7 @@ class LegalRAGSystem:
         max_tokens: int = 1000
     ) -> None:
         """Initialize the RAG system.
-        
+
         Args:
             vectorization_processor: Processor for document vectorization and retrieval.
             model_name: Name of the LLM model to use.
@@ -43,13 +43,13 @@ class LegalRAGSystem:
             template="""你是一個專業的法律助理，請基於以下文件內容回答問題。
             請使用繁體中文回答。
             如果無法從文件中找到答案，請明確說明。
-            
+
             文件內容：
             {context}
-            
+
             問題：
             {question}
-            
+
             回答："""
         )
 
@@ -62,11 +62,11 @@ class LegalRAGSystem:
 
     def _prepare_context(self, documents: List[Dict[str, Any]], max_length: int = 3000) -> str:
         """Prepare context from retrieved documents.
-        
+
         Args:
             documents: List of retrieved documents.
             max_length: Maximum context length.
-            
+
         Returns:
             Prepared context string.
         """
@@ -102,12 +102,12 @@ class LegalRAGSystem:
         filters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Answer a legal question using the RAG system.
-        
+
         Args:
             question: The legal question to answer.
             n_documents: Number of documents to retrieve.
             filters: Optional filters for document retrieval.
-            
+
         Returns:
             Dict containing the answer and supporting information.
         """
@@ -163,11 +163,11 @@ class LegalRAGSystem:
         analysis_type: str = "summary"
     ) -> Dict[str, Any]:
         """Analyze a legal document using the RAG system.
-        
+
         Args:
             document_text: The text of the legal document to analyze.
             analysis_type: Type of analysis to perform ("summary", "key_points", "risks").
-            
+
         Returns:
             Dict containing the analysis results.
         """
@@ -175,20 +175,20 @@ class LegalRAGSystem:
             # Define analysis prompts
             analysis_prompts = {
                 "summary": """請提供以下法律文件的摘要：
-                
+
                 文件內容：
                 {document}
-                
+
                 請包含：
                 1. 主要內容概述
                 2. 關鍵法律論點
                 3. 結論或判決結果""",
 
                 "key_points": """請分析以下法律文件的要點：
-                
+
                 文件內容：
                 {document}
-                
+
                 請列出：
                 1. 主要法律爭議
                 2. 適用法條
@@ -196,10 +196,10 @@ class LegalRAGSystem:
                 4. 法院見解""",
 
                 "risks": """請評估以下法律文件可能涉及的風險：
-                
+
                 文件內容：
                 {document}
-                
+
                 請分析：
                 1. 潛在法律風險
                 2. 合規問題

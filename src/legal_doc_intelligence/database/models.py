@@ -80,4 +80,7 @@ class ProcessingRecord(Base):
 
     def __repr__(self) -> str:
         """Return string representation of the processing record."""
-        return f"<ProcessingRecord(id={self.id}, document_id={self.document_id}, type={self.processing_type})>"
+        return (
+            f"<ProcessingRecord(id={self.id}, document_id={self.document_id}, "
+            f"type={self.processing_type})>"
+        )

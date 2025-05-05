@@ -55,7 +55,7 @@ class MetricConfig:
 
 class SystemMonitor:
     """Comprehensive system monitoring for the legal document platform.
-    
+
     Features:
     1. Resource monitoring (CPU, memory, disk)
     2. Performance metrics
@@ -72,7 +72,7 @@ class SystemMonitor:
         monitoring_interval: float = 5.0
     ):
         """Initialize the monitoring system.
-        
+
         Args:
             metrics_port: Port for Prometheus metrics endpoint.
             alert_history_size: Maximum number of alerts to keep in history.
@@ -226,7 +226,7 @@ class SystemMonitor:
 
     def _check_alerts(self, current_values: Dict[str, float]) -> None:
         """Check metrics against alert thresholds.
-        
+
         Args:
             current_values: Dictionary of current metric values.
         """
@@ -255,7 +255,7 @@ class SystemMonitor:
         processing_time: float
     ) -> None:
         """Record document processing metrics.
-        
+
         Args:
             success: Whether processing was successful.
             processing_time: Time taken to process the document.
@@ -270,7 +270,7 @@ class SystemMonitor:
         level: str
     ) -> None:
         """Record validation error metrics.
-        
+
         Args:
             rule_name: Name of the validation rule.
             level: Error severity level.
@@ -287,7 +287,7 @@ class SystemMonitor:
         success: bool
     ) -> None:
         """Record pipeline stage metrics.
-        
+
         Args:
             stage: Pipeline stage name.
             duration: Stage duration in seconds.
@@ -305,7 +305,7 @@ class SystemMonitor:
         latency: float
     ) -> None:
         """Record API request metrics.
-        
+
         Args:
             endpoint: API endpoint path.
             method: HTTP method.
@@ -325,7 +325,7 @@ class SystemMonitor:
         latency: float
     ) -> None:
         """Record vector store operation metrics.
-        
+
         Args:
             operation: Operation type (e.g., "insert", "search").
             latency: Operation latency in seconds.
@@ -336,7 +336,7 @@ class SystemMonitor:
 
     def update_vector_store_size(self, size: int) -> None:
         """Update vector store size metric.
-        
+
         Args:
             size: Current number of vectors in store.
         """
@@ -348,11 +348,11 @@ class SystemMonitor:
         since: Optional[datetime] = None
     ) -> List[Alert]:
         """Get recent alerts with optional filtering.
-        
+
         Args:
             level: Optional alert level to filter by.
             since: Optional timestamp to filter alerts from.
-            
+
         Returns:
             List of matching alerts.
         """
@@ -371,10 +371,10 @@ class SystemMonitor:
         window_minutes: float = 5.0
     ) -> float:
         """Calculate recent error rate.
-        
+
         Args:
             window_minutes: Time window in minutes.
-            
+
         Returns:
             Error rate as a fraction.
         """
@@ -396,10 +396,10 @@ class SystemMonitor:
         window_minutes: float = 5.0
     ) -> Dict[str, Any]:
         """Get recent performance statistics.
-        
+
         Args:
             window_minutes: Time window in minutes.
-            
+
         Returns:
             Dictionary of performance statistics.
         """

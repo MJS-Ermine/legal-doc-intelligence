@@ -23,7 +23,7 @@ class ChromaVectorStore(BaseVectorStore):
         embedding_model: str = "shibing624/text2vec-base-chinese"
     ):
         """Initialize the Chroma vector store.
-        
+
         Args:
             collection_name: Name of the Chroma collection to use.
             persist_directory: Optional directory path for persisting the vector store.
@@ -57,12 +57,12 @@ class ChromaVectorStore(BaseVectorStore):
         **kwargs: Any
     ) -> List[str]:
         """Add texts and their metadata to the vector store.
-        
+
         Args:
             texts: List of text strings to add.
             metadatas: Optional list of metadata dictionaries.
             **kwargs: Additional arguments passed to Chroma.
-            
+
         Returns:
             List of IDs for the added texts.
         """
@@ -90,12 +90,12 @@ class ChromaVectorStore(BaseVectorStore):
         **kwargs: Any
     ) -> List[Dict[str, Any]]:
         """Search for similar texts in the vector store.
-        
+
         Args:
             query: Query text to search for.
             k: Number of results to return.
             **kwargs: Additional arguments passed to Chroma.
-            
+
         Returns:
             List of dictionaries containing similar documents and their metadata.
         """

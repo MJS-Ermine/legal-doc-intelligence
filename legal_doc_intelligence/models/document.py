@@ -8,7 +8,7 @@ Base = declarative_base()
 
 class LegalDocument(Base):
     """法律文件基礎模型
-    
+
     用於存儲從各來源爬取的法律文件，包含原始內容和結構化數據
     """
     __tablename__ = 'legal_documents'
