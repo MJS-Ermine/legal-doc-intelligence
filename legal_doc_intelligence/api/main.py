@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List, Optional
 
-from fastapi import Depends, FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from ..database import get_db
@@ -16,7 +16,7 @@ app = FastAPI(
 
 @app.get("/documents/", response_model=List[DocumentList])
 async def list_documents(
-    db: Session = Depends(get_db),
+    db: Session = None,
     skip: int = Query(0, ge=0),
     limit: int = Query(20, ge=1, le=100),
     court: Optional[str] = None,
@@ -28,6 +28,9 @@ async def list_documents(
 
     可以通過法院、案件類型和日期範圍進行過濾
     """
+    if db is None:
+        db = next(get_db())
+
     query = db.query(LegalDocument)
 
     if court:
@@ -55,16 +58,22 @@ async def list_documents(
     ]
 
 @app.get("/documents/{doc_id}", response_model=DocumentResponse)
-async def get_document(doc_id: str, db: Session = Depends(get_db)):
+async def get_document(doc_id: str, db: Session = None):
     """獲取單個判決書詳情"""
+    if db is None:
+        db = next(get_db())
+
     document = db.query(LegalDocument).filter(LegalDocument.doc_id == doc_id).first()
     if not document:
         raise HTTPException(status_code=404, detail="Document not found")
     return document
 
 @app.get("/documents/{doc_id}/citations", response_model=List[CitationResponse])
-async def get_document_citations(doc_id: str, db: Session = Depends(get_db)):
+async def get_document_citations(doc_id: str, db: Session = None):
     """獲取判決書引用的法條"""
+    if db is None:
+        db = next(get_db())
+
     document = db.query(LegalDocument).filter(LegalDocument.doc_id == doc_id).first()
     if not document:
         raise HTTPException(status_code=404, detail="Document not found")
@@ -73,7 +82,7 @@ async def get_document_citations(doc_id: str, db: Session = Depends(get_db)):
 @app.post("/search/", response_model=List[DocumentList])
 async def search_documents(
     query: SearchQuery,
-    db: Session = Depends(get_db),
+    db: Session = None,
     skip: int = Query(0, ge=0),
     limit: int = Query(20, ge=1, le=100)
 ):
@@ -81,6 +90,9 @@ async def search_documents(
 
     支持全文搜索和條件過濾
     """
+    if db is None:
+        db = next(get_db())
+
     base_query = db.query(LegalDocument)
 
     # 關鍵詞搜索

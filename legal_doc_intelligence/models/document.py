@@ -26,7 +26,12 @@ class LegalDocument(Base):
     doc_metadata = Column(JSON, comment='額外元數據')
 
     created_at = Column(DateTime, default=datetime.utcnow, comment='創建時間')
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment='更新時間')
+    updated_at = Column(
+        DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        comment='更新時間'
+    )
 
     # 關聯
     citations = relationship("Citation", back_populates="document")

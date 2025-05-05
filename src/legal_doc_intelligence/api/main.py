@@ -3,7 +3,7 @@
 from datetime import datetime
 from typing import Any, Dict, Optional
 
-from fastapi import Depends, FastAPI, HTTPException, UploadFile
+from fastapi import FastAPI, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 from pydantic import BaseModel, Field
@@ -80,7 +80,7 @@ def get_db() -> Session:
 @app.post("/api/v1/question", response_model=Dict[str, Any])
 async def answer_question(
     request: QuestionRequest,
-    db: Session = Depends(get_db),
+    db: Session = None,
 ) -> Dict[str, Any]:
     """Answer a legal question using the RAG system.
 
@@ -91,6 +91,8 @@ async def answer_question(
     Returns:
         Answer and supporting information.
     """
+    if db is None:
+        db = next(get_db())
     try:
         response = await rag_system.answer_question(
             question=request.question,
@@ -107,7 +109,7 @@ async def answer_question(
 @app.post("/api/v1/analyze", response_model=Dict[str, Any])
 async def analyze_document(
     request: DocumentRequest,
-    db: Session = Depends(get_db),
+    db: Session = None,
 ) -> Dict[str, Any]:
     """Analyze a legal document.
 
@@ -118,6 +120,8 @@ async def analyze_document(
     Returns:
         Analysis results.
     """
+    if db is None:
+        db = next(get_db())
     try:
         # 處理文本
         cleaned_text = text_processor.clean_text(request.content)
