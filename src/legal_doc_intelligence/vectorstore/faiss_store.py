@@ -185,7 +185,10 @@ class FAISSVectorStore:
                     meta for i, meta in enumerate(self.metadatas)
                     if i not in indices_to_delete
                 ]
-                self.ids = [id for i, id in enumerate(self.ids) if i not in indices_to_delete]
+                self.ids = [
+                    id for i, id in enumerate(self.ids)
+                    if i not in indices_to_delete
+                ]
             else:
                 self.documents = []
                 self.metadatas = []
